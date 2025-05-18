@@ -8,7 +8,7 @@ export default async function getMessages(userA: string, userB: string) {
         { fromUserId: userB, toUserId: userA }
       ]
     },
-    orderBy: { createdAt: "desc" },
+    orderBy: { createdAt: "asc" },
     take: 30
   });
 } 

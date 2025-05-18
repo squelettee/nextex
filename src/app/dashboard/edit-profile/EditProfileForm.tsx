@@ -56,17 +56,12 @@ export default function EditProfileForm({ user }: { user: User | null }) {
   }
 
   return (
-    <div className="flex h-screen max-w-sm min-w-sm flex-col mx-auto bg-[#462a0b] items-center justify-center gap-24 relative overflow-hidden">
-      {/* Fond image + overlay */}
-      <Image src="/takemeback.jpg" alt="background" fill className="object-cover object-center" />
-      <div className="absolute inset-0 bg-black/70" />
-      {/* Formulaire centré */}
+    <div className="flex h-screen max-w-sm min-w-sm flex-col mx-auto bg-background text-foreground items-center justify-between gap-24 relative overflow-hidden">
       <form
         action={handleSubmit}
-        className="relative z-10 flex flex-col items-center gap-6 w-full max-w-sm min-w-sm px-8 py-10 rounded-3xl bg-black/70 pb-32"
+        className="relative z-10 flex flex-col items-center gap-6 w-full max-w-sm min-w-sm px-8 py-10 rounded-3xl bg-card/70 pb-32"
       >
-        <h2 className="text-3xl font-bold text-[#ffaf23] mb-2 font-['Changa_One',Impact,sans-serif] text-center">Edit your profile</h2>
-        {/* Photo de profil actuelle */}
+        <div className="inline-flex items-center border focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 mb-4 rounded-full px-4 py-1.5 text-sm font-medium shadow-sm transition-none mt-8"><span className="mr-1 text-primary">✦</span>Edit your profile</div>
         {user?.image && (
           <div className="mb-2 flex justify-center w-full">
             <Image
@@ -74,52 +69,51 @@ export default function EditProfileForm({ user }: { user: User | null }) {
               alt="Profile"
               width={96}
               height={96}
-              className="rounded-full object-cover border-4 border-[#ffaf23]"
+              className="rounded-full object-cover border-4 border-primary"
             />
           </div>
         )}
         <div className="flex flex-col gap-2 w-full">
-          <Label htmlFor="name" className="text-white">Name</Label>
+          <Label htmlFor="name" className="text-card-foreground">Name</Label>
           <Input
             id="name"
             type="text"
             placeholder="Name"
             name="name"
             defaultValue={user?.name || ""}
-            className="bg-black/60 text-white border-none focus:ring-2 focus:ring-[#ffaf23] rounded-lg"
+            className="bg-muted text-muted-foreground border-none focus:ring-2 focus:ring-ring rounded-lg"
           />
         </div>
         <div className="flex flex-col gap-2 w-full">
-          <Label htmlFor="bio" className="text-white">Bio</Label>
+          <Label htmlFor="bio" className="text-card-foreground">Bio</Label>
           <Textarea
             id="bio"
             placeholder="Bio"
             name="bio"
             defaultValue={user?.bio || ""}
-            className="bg-black/60 text-white border-none focus:ring-2 focus:ring-[#ffaf23] rounded-lg"
+            className="bg-muted text-muted-foreground border-none focus:ring-2 focus:ring-ring rounded-lg"
           />
         </div>
         <div className="flex flex-col gap-2 w-full">
-          <Label htmlFor="image" className="text-white">Image</Label>
+          <Label htmlFor="image" className="text-card-foreground">Image</Label>
           <Input
             id="image"
             type="file"
             accept="image/*"
             name="image"
-            className="bg-black/60 text-white border-none focus:ring-2 focus:ring-[#ffaf23] rounded-lg file:bg-[#ffaf23] file:text-black file:font-bold file:rounded file:px-3 file:py-1"
+            className="bg-muted text-muted-foreground border-none focus:ring-2 focus:ring-ring rounded-lg file:bg-primary file:text-primary-foreground file:font-bold file:rounded file:px-3 file:py-1"
           />
         </div>
         <WalletDisconnectButton style={{ width: "100%", textAlign: "center", justifyContent: "center" }} onClick={() => router.push('/')} />
         <Button
-          className="w-full mt-2 bg-[#ffaf23] text-black font-bold text-lg rounded-sm py-3 hover:bg-[#ffd966] transition-colors"
+          className="w-full mt-2 bg-primary text-primary-foreground font-bold text-lg rounded-sm py-6 hover:bg-primary/80 transition-colors"
           type="submit"
           disabled={loading}
         >
           {loading ? "Saving..." : "Save"}
         </Button>
       </form>
-      {/* Navbar en fixed en bas */}
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-sm min-w-sm z-20">
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-sm min-w-sm z-20 h-[10vh]">
         <Navbar user={user} publicKey={publicKey} />
       </div>
     </div>

@@ -26,7 +26,6 @@ model User {
   refferal   String?  @default("")
   personalReferral String?  @default("")
   onboarded      Boolean  @default(false)
-  
   likes      UserLikes[]     @relation("UserLikesFrom")
   likedBy    UserLikes[]     @relation("UserLikesTo")
   dislikes   UserDislikes[]  @relation("UserDislikesFrom")
