@@ -2,7 +2,7 @@ import getMatches from "@/query/getMatches";
 import type { User } from "../../../../generated/prisma";
 import MatchProfileClient from "./MatchProfileClient";
 
-export default async function MatchProfilePage({ searchParams }: { searchParams: { userId?: string } }) {
+export default async function MatchProfilePage({ searchParams }: { searchParams: Promise<{ userId?: string }> }) {
   // Next.js 15: searchParams will be async in the future
   const { userId } = await searchParams;
   if (!userId) return <div>No userId provided</div>;

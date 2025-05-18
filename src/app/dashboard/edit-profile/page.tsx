@@ -1,7 +1,7 @@
 import getUser from "@/query/getUser";
 import EditProfileForm from "./EditProfileForm";
 
-export default async function EditProfilePage({ searchParams }: { searchParams: { wallet?: string } }) {
+export default async function EditProfilePage({ searchParams }: { searchParams: Promise<{ wallet?: string }> }) {
   // Next.js 15: searchParams will be async in the future
   const { wallet } = await searchParams;
   let user = null;

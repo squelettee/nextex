@@ -7,7 +7,6 @@ import Link from "next/link";
 
 export default function ChallengeTokenClient({ user }: { user: User | null }) {
   const { publicKey } = useWallet();
-  const affiliateLink = publicKey ? `https://localhost3000?referral=${publicKey.toBase58()}` : '';
 
   return (
     <div className="min-h-screen w-full max-w-sm min-w-sm mx-auto flex flex-col items-center justify-start relative pb-32 overflow-hidden bg-background text-foreground">
@@ -29,36 +28,22 @@ export default function ChallengeTokenClient({ user }: { user: User | null }) {
           )}
         </div>
         <div className="rounded-2xl p-4 bg-card/70 text-card-foreground">
-          <h2 className="text-xl font-semibold mb-2 text-primary">Connect your wallet</h2>
-          <p className="text-muted-foreground mb-4">Connect your Solana wallet to earn 10 tokens</p>
-          <Button className="w-full bg-primary text-primary-foreground font-bold rounded-xl py-2 hover:bg-primary/80 transition-colors">Connect wallet</Button>
+          <h2 className="text-xl font-semibold mb-2 text-primary">Follow on X</h2>
+          <p className="text-muted-foreground mb-4">Follow us on X to earn 50 tokens</p>
+          <Link href="https://x.com" target="_blank">
+            <Button className="w-full bg-primary text-primary-foreground font-bold rounded-xl py-2 hover:bg-primary/80 transition-colors">
+              Follow on X
+            </Button>
+          </Link>
         </div>
         <div className="rounded-2xl p-4 bg-card/70 text-card-foreground">
-          <h2 className="text-xl font-semibold mb-2 text-primary">Invite friends</h2>
-          <p className="text-muted-foreground mb-4">Earn 3 tokens for each friend who joins using your link</p>
-          {publicKey ? (
-            <div className="flex flex-col gap-2">
-              <input
-                type="text"
-                value={affiliateLink}
-                readOnly
-                className="p-2 border rounded bg-card/40 text-card-foreground border-primary"
-              />
-              <Button
-                className="w-full bg-primary text-primary-foreground font-bold rounded-xl py-2 hover:bg-primary/80 transition-colors"
-                onClick={() => navigator.clipboard.writeText(affiliateLink)}
-              >
-                Copy link
-              </Button>
-            </div>
-          ) : (
-            <p className="text-sm text-destructive">Connect your wallet to get your affiliate link</p>
-          )}
-        </div>
-        <div className="rounded-2xl p-4 bg-card/70 text-card-foreground">
-          <h2 className="text-xl font-semibold mb-2 text-primary">Daily activity</h2>
-          <p className="text-muted-foreground mb-4">Log in daily to earn 1 token</p>
-          <Button className="w-full bg-primary text-primary-foreground font-bold rounded-xl py-2 hover:bg-primary/80 transition-colors">Log in</Button>
+          <h2 className="text-xl font-semibold mb-2 text-primary">Match with 5 people</h2>
+          <p className="text-muted-foreground mb-4">Match with 5 people to earn 100 tokens</p>
+          <Link href="/dashboard">
+            <Button className="w-full bg-primary text-primary-foreground font-bold rounded-xl py-2 hover:bg-primary/80 transition-colors">
+              Start matching
+            </Button>
+          </Link>
         </div>
       </div>
       <div className="mt-4 p-4 bg-card/60 rounded-lg w-full max-w-sm text-center text-muted-foreground">
@@ -72,4 +57,4 @@ export default function ChallengeTokenClient({ user }: { user: User | null }) {
       </div>
     </div>
   );
-} 
+}

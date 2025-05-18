@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { FlameIcon } from "lucide-react";
+import { Suspense } from "react";
 const WalletMultiButton = dynamic(
   () => import("@solana/wallet-adapter-react-ui").then((mod) => mod.WalletMultiButton),
   {
@@ -14,7 +15,15 @@ const WalletMultiButton = dynamic(
   }
 );
 
-export default function Home() {
+export default function Page() {
+  return (
+    <Suspense>
+      <Home />
+    </Suspense>
+  );
+}
+
+function Home() {
   const searchParams = useSearchParams();
   const referral = searchParams.get("referral");
   const { connected, publicKey } = useWallet();
