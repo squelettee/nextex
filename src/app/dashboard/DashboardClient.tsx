@@ -52,6 +52,8 @@ export default function DashboardClient({ usersProps }: { usersProps: UserWithRe
       await dislikeUser(currentUser.id, userId);
     }
     setTimeout(() => setLikeAnimation({ id: null, type: null }), 1000);
+
+    setUsers(prev => prev.filter(u => u.id !== userId));
   }
 
   return (
