@@ -25,7 +25,7 @@ export default function Page() {
 
 function Home() {
   const searchParams = useSearchParams();
-  const referral = searchParams.get("referral");
+  const referral = searchParams.get("referral") || undefined;
   const { connected, publicKey } = useWallet();
   const router = useRouter();
 
