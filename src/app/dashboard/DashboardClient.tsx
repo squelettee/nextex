@@ -18,6 +18,7 @@ type UserWithRelations = User & {
 };
 
 export default function DashboardClient({ usersProps }: { usersProps: UserWithRelations[] }) {
+  console.log(usersProps);
   const { connected, publicKey } = useWallet();
   const [users, setUsers] = useState<UserWithRelations[]>(usersProps);
   const router = useRouter();
