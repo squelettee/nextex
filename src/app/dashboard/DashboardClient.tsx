@@ -1,15 +1,15 @@
 "use client";
 
+import { dislikeUser } from "@/actions/dislike";
+import { likeUser } from "@/actions/like-user";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { PublicKey } from "@solana/web3.js";
+import { CoinsIcon, HeartIcon, MessageCircleHeart, SettingsIcon, XIcon } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { User } from "../../../generated/prisma";
-import { likeUser } from "@/actions/like-user";
-import Image from "next/image";
-import { CoinsIcon, HeartIcon, MessageCircleHeart, SettingsIcon, XIcon } from "lucide-react";
-import { PublicKey } from "@solana/web3.js";
-import { dislikeUser } from "@/actions/dislike";
 
 type UserWithRelations = User & {
   dislikes: { toId: string }[],
@@ -18,7 +18,6 @@ type UserWithRelations = User & {
 };
 
 export default function DashboardClient({ usersProps }: { usersProps: UserWithRelations[] }) {
-  console.log(usersProps);
   const { connected, publicKey } = useWallet();
   const [users, setUsers] = useState<UserWithRelations[]>(usersProps);
   const router = useRouter();
@@ -58,13 +57,13 @@ export default function DashboardClient({ usersProps }: { usersProps: UserWithRe
 
   return (
     <div className="flex max-w-sm min-w-sm flex-col h-screen w-full bg-background items-center justify-between mx-auto">
-      <div className="flex flex-row justify-end items-center gap-2 p-2 fixed top-0 ">
+      <div className="flex flex-row justify-end items-center gap-1 p-2 fixed top-0 ">
         <p className="text-foreground font-bold">{currentUser?.tokens}</p>
         <CoinsIcon className="w-4 h-4 text-foreground" />
       </div>
 
       <div className="w-full h-full flex items-center justify-center">
-        <div className="w-full h-[80vh]">
+        <div className="w-full self-start mt-16 h-[80vh]">
           {(!currentUser?.image || !currentUser?.name || !currentUser?.bio) ? (
             <div className="flex flex-col items-center justify-center h-full text-center">
               <p className="text-xl font-bold text-foreground">Update your profile to swipe</p>
@@ -127,7 +126,9 @@ export default function DashboardClient({ usersProps }: { usersProps: UserWithRe
           )}
         </div>
       </div>
-      <Navbar user={currentUser} publicKey={publicKey} />
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-sm min-w-sm z-20 h-[10vh]">
+        <Navbar user={currentUser} publicKey={publicKey} />
+      </div>
     </div>
   );
 }
@@ -148,7 +149,7 @@ export function Navbar({ user, publicKey }: { user: User | null, publicKey: Publ
       {pathname === `/dashboard/match-profile` ? (
         <MessageCircleHeart className="w-10 h-10 text-primary hover:text-foreground transition-colors rounded-full p-1" />
       ) : (
-        <Link href={`/dashboard/match-profile?userId=${user?.id}`} className="text-primary hover:text-foreground transition-colors">
+        <Link href={`/dashboard/match-profile?userId=${user?.id}&wallet=${publicKey?.toBase58()}`} className="text-primary hover:text-foreground transition-colors">
           <MessageCircleHeart className="w-10 h-10 text-primary hover:text-foreground transition-colors rounded-full p-1" />
         </Link>
       )}

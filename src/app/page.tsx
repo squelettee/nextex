@@ -2,12 +2,10 @@
 
 import { createUser } from "@/actions/create-user";
 import { useWallet } from "@solana/wallet-adapter-react";
-import dynamic from "next/dynamic";
-import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
 import { FlameIcon } from "lucide-react";
-import { Suspense } from "react";
+import dynamic from "next/dynamic";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect } from "react";
 const WalletMultiButton = dynamic(
   () => import("@solana/wallet-adapter-react-ui").then((mod) => mod.WalletMultiButton),
   {
@@ -25,7 +23,7 @@ export default function Page() {
 
 function Home() {
   const searchParams = useSearchParams();
-  const referral = searchParams.get("referral") || undefined;
+  const referral = searchParams?.get("referral") || undefined;
   const { connected, publicKey } = useWallet();
   const router = useRouter();
 
@@ -48,7 +46,10 @@ function Home() {
   }, [connected, publicKey, referral, router]);
 
   return (
-    <div className="flex h-screen max-w-sm min-w-sm mx-auto bg-background text-foreground flex-col items-center justify-center gap-24 relative">
+    <div
+      className="flex h-screen max-w-sm min-w-sm mx-auto bg-background text-foreground flex-col items-center justify-center gap-24 relative"
+      style={{ backgroundImage: 'url(/backgroundshape.webp)', backgroundSize: 'cover' }}
+    >
       <div className="relative flex flex-col items-center">
         <FlameIcon className="w-10 h-10 mb-2" />
         <h1 className="text-5xl font-bold text-primary text-center">Nextex</h1>

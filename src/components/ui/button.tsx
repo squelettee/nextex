@@ -1,6 +1,6 @@
-import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
+import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
@@ -11,6 +11,10 @@ const buttonVariants = cva(
       variant: {
         default:
           "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
+        solanaDefault:
+          "tw-justify-center tw-inline-flex tw-items-center tw-gap-3.5 tw-tracking-wider tw-font-mono tw-text-center tw-uppercase tw-rounded-full tw-transition-color tw-whitespace-nowrap tw-text-gray-800 dark:tw-text-common-white hover:tw-bg-common-white hover:!tw-text-common-black tw-bg-gradient-button hover:tw-bg-none tw-text-md tw-py-4 tw-px-[18px] tw-w-full sm:tw-w-fit",
+        solanaSecondary:
+          "tw-justify-center tw-inline-flex tw-items-center tw-gap-3.5 tw-tracking-wider tw-font-mono tw-text-center tw-uppercase tw-rounded-full tw-transition-color tw-whitespace-nowrap tw-text-gray-800 dark:tw-text-common-white hover:tw-bg-common-white hover:!tw-text-common-black tw-border tw-border-common-black dark:tw-border-common-white tw-text-md tw-py-4 tw-px-[18px] tw-w-full sm:tw-w-fit",
         destructive:
           "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:

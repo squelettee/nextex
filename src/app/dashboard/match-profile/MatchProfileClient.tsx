@@ -1,20 +1,29 @@
 "use client";
-import type { User } from "../../../../generated/prisma";
-import Link from "next/link";
-import Image from "next/image";
-import { Navbar } from "../DashboardClient";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { CoinsIcon } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import type { User } from "../../../../generated/prisma";
+import { Navbar } from "../DashboardClient";
 
-export default function MatchProfileClient({ matches, myUserId }: { matches: User[]; myUserId: string }) {
+export default function MatchProfileClient({ matches, myUserId, user }: { matches: User[]; myUserId: string, user: User | null }) {
   const { publicKey } = useWallet();
 
   return (
     <div className="min-h-screen w-full max-w-sm min-w-sm mx-auto flex flex-col items-center justify-start relative py-8 px-2 overflow-hidden pb-32 bg-background text-foreground">
-      {/* Fond image + overlay */}
+      <div className="flex flex-row justify-end items-center gap-1 p-2 fixed top-0 ">
+        <p className="text-foreground font-bold">{user?.tokens}</p>
+        <CoinsIcon className="w-4 h-4 text-foreground" />
+      </div>
       <Image src="/god.jpg" alt="background" fill className="object-cover object-center -z-10" />
       <div className="absolute inset-0 bg-background/70 -z-10" />
       <div className="inline-flex items-center border focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 mb-8 rounded-full px-4 py-1.5 text-sm  font-medium shadow-sm transition-none mt-8"><span className="mr-1 text-primary">✦</span>Matches</div>
       <ul className="w-full flex flex-col gap-4">
+        {matches.length === 0 && (
+          <div className="flex flex-col items-center justify-center h-full">
+            <p className="text-muted-foreground">No matches found</p>
+          </div>
+        )}
         {matches.map((user) => (
           <li key={user.id} className="w-full">
             <div className="flex flex-row items-center gap-4 bg-card/70 rounded-2xl p-4 shadow-lg border border-black">

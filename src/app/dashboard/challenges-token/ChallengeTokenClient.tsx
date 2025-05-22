@@ -1,16 +1,21 @@
 "use client";
+import { User } from "@/../generated/prisma";
 import { Button } from "@/components/ui/button";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { Navbar } from "../DashboardClient";
-import { User } from "@/../generated/prisma";
+import { CoinsIcon } from "lucide-react";
 import Link from "next/link";
+import { Navbar } from "../DashboardClient";
 
 export default function ChallengeTokenClient({ user }: { user: User | null }) {
   const { publicKey } = useWallet();
 
   return (
-    <div className="min-h-screen w-full max-w-sm min-w-sm mx-auto flex flex-col items-center justify-start relative pb-32 overflow-hidden bg-background text-foreground">
-      <div className="inline-flex items-center border focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 mb-4 rounded-full px-4 py-1.5 text-sm font-medium shadow-sm transition-none mt-8"><span className="mr-1 text-primary">✦</span>Earn tokens</div>
+    <div className="min-h-screen w-full max-w-sm min-w-sm mx-auto flex flex-col items-center justify-start relative overflow-hidden bg-background text-foreground">
+      <div className="flex flex-row justify-end items-center gap-1 p-2 fixed top-0 ">
+        <p className="text-foreground font-bold">{user?.tokens}</p>
+        <CoinsIcon className="w-4 h-4 text-foreground" />
+      </div>
+      <div className="inline-flex items-center border focus:outline-none mt-16 focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 mb-8 rounded-full px-4 py-1.5 text-sm font-medium shadow-sm transition-none"><span className="mr-1 text-primary">✦</span>Earn tokens</div>
       <div className="w-full flex flex-col gap-4 px-2">
         <div className="rounded-2xl p-4 bg-card/70 text-card-foreground">
           <h2 className="text-xl font-semibold mb-2 text-primary">Complete your profile</h2>

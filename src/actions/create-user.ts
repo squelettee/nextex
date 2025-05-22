@@ -1,8 +1,8 @@
 // src/actions/create-user.ts
 "use server";
 
-import { PublicKey } from "@solana/web3.js";
 import prisma from "@/lib/prisma";
+import { PublicKey } from "@solana/web3.js";
 
 export async function createUser(publicKeyString: string, referral?: string) {
   const publicKey = new PublicKey(publicKeyString);
@@ -18,7 +18,7 @@ export async function createUser(publicKeyString: string, referral?: string) {
 
   if (referral && referral !== "undefined") {
     const referralUser = await prisma.user.findFirst({
-      where: { personalReferral: referral },
+      where: { id: referral },
     });
 
     if (referralUser) {
@@ -37,7 +37,7 @@ export async function createUser(publicKeyString: string, referral?: string) {
 
 
   await prisma.user.create({
-    data: { wallet: publicKey.toBase58(), lastSeen: new Date(), refferal: referral },
+    data: { wallet: publicKey.toBase58(), lastSeen: new Date(), referral: referral || null },
   });
 
   return { success: true, onboarded: false };

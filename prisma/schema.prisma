@@ -23,8 +23,7 @@ model User {
   bio        String?
   image      String?
   tokens     Int      @default(0)
-  refferal   String?  @default("")
-  personalReferral String?  @default("")
+  referral   String?  @default("")
   onboarded      Boolean  @default(false)
   likes      UserLikes[]     @relation("UserLikesFrom")
   likedBy    UserLikes[]     @relation("UserLikesTo")

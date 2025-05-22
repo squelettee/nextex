@@ -1,18 +1,18 @@
 "use client";
 
 import { updateUser } from "@/actions/update-user";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { redirect } from "next/navigation";
-import { useState } from "react";
-import type { User } from "../../../../generated/prisma";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { CoinsIcon } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { redirect, useRouter } from "next/navigation";
+import { useState } from "react";
+import type { User } from "../../../../generated/prisma";
 import { Navbar } from "../DashboardClient";
-import { useRouter } from "next/navigation";
 
 const WalletDisconnectButton = dynamic(() => import("@solana/wallet-adapter-react-ui").then((mod) => mod.WalletDisconnectButton), { ssr: false });
 
@@ -41,22 +41,33 @@ export default function EditProfileForm({ user }: { user: User | null }) {
 
     const message = `Update profile for ${publicKey.toBase58()} at ${Date.now()}`;
     const encodedMessage = new TextEncoder().encode(message);
-    const signature = await signMessage(encodedMessage);
 
-    await updateUser(
-      publicKey.toBase58(),
-      name,
-      bio,
-      image,
-      message,
-      Buffer.from(signature).toString("base64")
-    );
+    try {
+      const signature = await signMessage(encodedMessage);
 
-    router.push("/dashboard");
+      await updateUser(
+        publicKey.toBase58(),
+        name,
+        bio,
+        image,
+        message,
+        Buffer.from(signature).toString("base64")
+      );
+
+      router.push("/dashboard");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
-    <div className="flex h-screen max-w-sm min-w-sm flex-col mx-auto bg-background text-foreground items-center justify-between gap-24 relative overflow-hidden">
+    <div className="flex h-screen max-w-sm min-w-sm flex-col mx-auto bg-background text-foreground items-center justify-between relative overflow-hidden">
+      <div className=" z-30 flex flex-row justify-end items-center gap-1 p-2 fixed top-0 ">
+        <p className="text-foreground font-bold">{user?.tokens}</p>
+        <CoinsIcon className="w-4 h-4 text-foreground" />
+      </div>
       <form
         action={handleSubmit}
         className="relative z-10 flex flex-col items-center gap-6 w-full max-w-sm min-w-sm px-8 py-10 rounded-3xl bg-card/70 pb-32"
