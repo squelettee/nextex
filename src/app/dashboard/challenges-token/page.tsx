@@ -5,5 +5,16 @@ export default async function ChallengesTokenPage({ searchParams }: { searchPara
   const { wallet } = await searchParams;
   if (!wallet) return <div>No wallet provided</div>;
   const user = await getUser(wallet);
-  return <ChallengeTokenClient user={user} />;
+  return (
+    <ChallengeTokenClient
+      user={
+        user
+          ? {
+            ...user,
+            lastDailyClaim: user.lastDailyClaim ? user.lastDailyClaim.toISOString() : null,
+          }
+          : null
+      }
+    />
+  );
 }

@@ -56,7 +56,10 @@ export default function DashboardClient({ usersProps }: { usersProps: UserWithRe
   }
 
   return (
-    <div className="flex max-w-sm min-w-sm flex-col h-screen w-full bg-background items-center justify-between mx-auto">
+    <div
+      className="flex max-w-sm min-w-sm flex-col h-screen w-full bg-background items-center justify-between mx-auto"
+      style={{ backgroundImage: 'url(/backgroundshape.webp)', backgroundSize: 'cover' }}
+    >
       <div className="flex flex-row justify-end items-center gap-1 p-2 fixed top-0 ">
         <p className="text-foreground font-bold">{currentUser?.tokens}</p>
         <CoinsIcon className="w-4 h-4 text-foreground" />

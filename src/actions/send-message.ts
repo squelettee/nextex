@@ -22,5 +22,10 @@ export async function sendMessage(fromUserId: string, toUserId: string, content:
     message,
   });
 
+  await prisma.user.update({
+    where: { id: fromUserId },
+    data: { tokens: { decrement: 5 } },
+  });
+
   return message;
 }

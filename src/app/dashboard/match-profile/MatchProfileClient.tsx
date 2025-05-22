@@ -10,8 +10,11 @@ export default function MatchProfileClient({ matches, myUserId, user }: { matche
   const { publicKey } = useWallet();
 
   return (
-    <div className="min-h-screen w-full max-w-sm min-w-sm mx-auto flex flex-col items-center justify-start relative py-8 px-2 overflow-hidden pb-32 bg-background text-foreground">
-      <div className="flex flex-row justify-end items-center gap-1 p-2 fixed top-0 ">
+    <div
+      className="min-h-screen w-full max-w-sm min-w-sm mx-auto flex flex-col items-center justify-start relative py-8 px-2 overflow-hidden pb-32 bg-background text-foreground"
+      style={{ backgroundImage: 'url(/backgroundshape.webp)', backgroundSize: 'cover' }}
+    >
+      <div className="flex flex-row justify-end items-center gap-1 p-2 fixed top-0">
         <p className="text-foreground font-bold">{user?.tokens}</p>
         <CoinsIcon className="w-4 h-4 text-foreground" />
       </div>
@@ -34,7 +37,7 @@ export default function MatchProfileClient({ matches, myUserId, user }: { matche
                 <p className="font-bold text-lg text-card-foreground">{user.name}</p>
               </div>
               <Link
-                href={`/dashboard/match-profile/${user.id}/private-chat?me=${myUserId}`}
+                href={`/dashboard/match-profile/${user.id}/private-chat?me=${myUserId}&wallet=${publicKey?.toBase58()}`}
                 className="bg-primary text-primary-foreground font-bold rounded-xl px-4 py-2 hover:bg-primary/80 transition-colors text-sm"
               >
                 Chat

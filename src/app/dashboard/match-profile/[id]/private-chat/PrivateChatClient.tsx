@@ -2,11 +2,12 @@
 import { sendMessage } from "@/actions/send-message";
 import { pusherClient } from "@/lib/pusher-client";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { CoinsIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import type { Message } from "../../../../../../generated/prisma";
+import type { Message, User } from "../../../../../../generated/prisma";
 import { Navbar } from "../../../DashboardClient";
 
-export default function PrivateChatClient({ myUserId, otherUserId, messages: initialMessages }: { myUserId: string; otherUserId: string; messages: Message[] }) {
+export default function PrivateChatClient({ myUserId, otherUserId, messages: initialMessages, user }: { myUserId: string; otherUserId: string; messages: Message[]; user: User }) {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -65,6 +66,10 @@ export default function PrivateChatClient({ myUserId, otherUserId, messages: ini
   return (
     <div className="flex flex-col h-screen w-full max-w-sm min-w-sm mx-auto bg-background text-foreground">
       {/* Header */}
+      <div className="flex flex-row justify-end items-center gap-1 p-2 fixed top-0 ">
+        <p className="text-foreground font-bold">{user?.tokens}</p>
+        <CoinsIcon className="w-4 h-4 text-foreground" />
+      </div>
       <div className="flex justify-center pt-8 pb-4">
         <div className="inline-flex items-center border focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-full px-4 py-1.5 text-sm font-medium shadow-sm transition-none">
           <span className="mr-1 text-primary">✦</span>Private Chat
@@ -104,7 +109,7 @@ export default function PrivateChatClient({ myUserId, otherUserId, messages: ini
             placeholder="Message..."
             className="flex-1 rounded-lg px-3 py-2 bg-muted text-muted-foreground border-none focus:ring-2 focus:ring-ring"
           />
-          <button type="submit" className="bg-primary text-primary-foreground font-bold px-4 py-2 rounded-lg hover:bg-primary/80 transition-colors">Send</button>
+          <button type="submit" className="bg-primary text-primary-foreground font-bold px-4 py-2 rounded-lg hover:bg-primary/80 transition-colors">Use 5 tokens</button>
         </form>
       </div>
 
