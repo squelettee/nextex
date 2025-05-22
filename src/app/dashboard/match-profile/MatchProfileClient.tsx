@@ -45,7 +45,7 @@ export default function MatchProfileClient({ matches, myUserId, user }: { matche
       </ul>
       {/* Navbar en fixed en bas */}
       <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-sm min-w-sm z-20">
-        <Navbar user={null} publicKey={publicKey} />
+        <Navbar user={user} publicKey={publicKey} />
       </div>
     </div>
   );

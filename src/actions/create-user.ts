@@ -26,7 +26,7 @@ export async function createUser(publicKeyString: string, referral?: string) {
         where: { id: referralUser.id },
         data: {
           tokens: {
-            increment: 100,
+            increment: 500,
           },
         },
       });

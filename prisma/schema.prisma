@@ -31,6 +31,13 @@ model User {
   dislikedBy UserDislikes[]  @relation("UserDislikesTo")
   messagesSent     Message[] @relation("MessagesSent")
   messagesReceived Message[] @relation("MessagesReceived")
+
+  visitedX Boolean @default(false)
+  visitedInstagram Boolean @default(false)
+  visitedTiktok Boolean @default(false)
+  visitedYoutube Boolean @default(false)
+  visitedTelegram Boolean @default(false)
+  lastDailyClaim DateTime?
 }
 
 model UserLikes {

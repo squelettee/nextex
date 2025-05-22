@@ -1,10 +1,10 @@
 "use client";
-import type { Message } from "../../../../../../generated/prisma";
-import { useEffect, useRef, useState } from "react";
-import { pusherClient } from "@/lib/pusher-client";
 import { sendMessage } from "@/actions/send-message";
-import { Navbar } from "../../../DashboardClient";
+import { pusherClient } from "@/lib/pusher-client";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { useEffect, useRef, useState } from "react";
+import type { Message } from "../../../../../../generated/prisma";
+import { Navbar } from "../../../DashboardClient";
 
 export default function PrivateChatClient({ myUserId, otherUserId, messages: initialMessages }: { myUserId: string; otherUserId: string; messages: Message[] }) {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
