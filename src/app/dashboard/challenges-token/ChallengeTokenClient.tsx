@@ -137,7 +137,7 @@ export default function ChallengeTokenClient({ user: initialUser }: { user: User
                 size="sm"
                 className="px-3 py-1 text-xs font-bold"
                 onClick={() => {
-                  navigator.clipboard.writeText(`localhost:3000/referral=${user.id}`);
+                  navigator.clipboard.writeText(`localhost:3000?referral=${user.id}`);
                 }}
               >
                 Copy
