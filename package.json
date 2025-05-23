@@ -1,12 +1,13 @@
 {
   "name": "nextex",
-  "version": "0.1.0",
+  "version": "0.1.0", 
   "private": true,
   "scripts": {
     "dev": "next dev",
     "prisma:generate": "prisma generate --schema=./packages/db/schema.prisma",
     "prisma:migrate": "prisma migrate deploy --schema=./packages/db/schema.prisma",
-    "build": "prisma generate && prisma migrate deploy && next build",
+    "prisma:reset": "prisma migrate reset --schema=./packages/db/schema.prisma --force",
+    "build": "prisma generate && prisma migrate reset --force && prisma migrate deploy && next build",
     "start": "next start",
     "lint": "next lint"
   },
