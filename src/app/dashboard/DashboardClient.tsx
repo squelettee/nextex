@@ -77,25 +77,33 @@ export default function DashboardClient({ usersProps }: { usersProps: UserWithRe
           ) : users.filter(user =>
             user.wallet !== publicKey?.toBase58() &&
             !dislikedIds.includes(user.id) &&
-            !matchedIds.includes(user.id)
+            !matchedIds.includes(user.id) &&
+            user.image &&
+            user.name &&
+            user.bio
           ).length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center">
               <p className="text-xl font-bold text-foreground">No more profiles available</p>
               <p className="text-muted-foreground mt-2">Check back later for new matches!</p>
             </div>
           ) : (
-            users
-              .filter(user =>
+            (() => {
+              const filteredUsers = users.filter(user =>
                 user.wallet !== publicKey?.toBase58() &&
                 !dislikedIds.includes(user.id) &&
-                !matchedIds.includes(user.id)
-              )
-              .map((user) => (
+                !matchedIds.includes(user.id) &&
+                user.image &&
+                user.name &&
+                user.bio
+              );
+              const currentProfile = filteredUsers[0];
+
+              return currentProfile && (
                 <div
-                  key={user.id}
+                  key={currentProfile.id}
                   className="relative flex flex-col items-center rounded-4xl shadow h-full overflow-hidden"
                 >
-                  {likeAnimation.id === user.id && (
+                  {likeAnimation.id === currentProfile.id && (
                     <div className="absolute inset-0 z-50 flex items-center justify-center">
                       {likeAnimation.type === 'like' ? (
                         <HeartIcon className="w-32 h-32 text-destructive animate-bounce" />
@@ -104,28 +112,29 @@ export default function DashboardClient({ usersProps }: { usersProps: UserWithRe
                       )}
                     </div>
                   )}
-                  {user.image && (
+                  {currentProfile.image && (
                     <div className="w-full h-full relative">
                       <Image
-                        src={user.image}
+                        src={currentProfile.image}
                         alt="User Image"
                         fill
                         className="object-cover object-top"
                       />
                       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/70 to-transparent">
                         <div className="flex items-center gap-2 pl-4">
-                          <p className="font-bold text-xl text-card-foreground">{user.name}</p>
+                          <p className="font-bold text-xl text-card-foreground">{currentProfile.name}</p>
                         </div>
-                        <p className="text-card-foreground line-clamp-2 pl-4">{user.bio}</p>
+                        <p className="text-card-foreground line-clamp-2 pl-4">{currentProfile.bio}</p>
                         <div className="flex justify-around items-center h-18 ">
-                          <Image src={"/nope.png"} height={70} width={70} alt="dislike" onClick={() => handleLike(user.id, 'dislike')} className="cursor-pointer hover:scale-110 transition-transform grayscale" />
-                          <Image src={"/like.png"} height={70} width={70} alt="like" onClick={() => handleLike(user.id, 'like')} className="cursor-pointer hover:scale-110 transition-transform" style={{ filter: 'drop-shadow(0 0 8px var(--primary))' }} />
+                          <Image src={"/nope.png"} height={70} width={70} alt="dislike" onClick={() => handleLike(currentProfile.id, 'dislike')} className="cursor-pointer hover:scale-110 transition-transform grayscale" />
+                          <Image src={"/like.png"} height={70} width={70} alt="like" onClick={() => handleLike(currentProfile.id, 'like')} className="cursor-pointer hover:scale-110 transition-transform" style={{ filter: 'drop-shadow(0 0 8px var(--primary))' }} />
                         </div>
                       </div>
                     </div>
                   )}
                 </div>
-              ))
+              );
+            })()
           )}
         </div>
       </div>
