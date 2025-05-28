@@ -3,6 +3,12 @@
   "installCommand": "bun install",
   "framework": "nextjs",
   "env": {
-    "PRISMA_GENERATE_DATAPROXY": "true"
+    "PRISMA_GENERATE_DATAPROXY": "true",
+    "PRISMA_CLI_BINARY_TARGETS": "rhel-openssl-3.0.x"
+  },
+  "functions": {
+    "app/**/*.{js,ts}": {
+      "maxDuration": 30
+    }
   }
 }

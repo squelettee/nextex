@@ -7,7 +7,7 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate deploy",
     "prisma:reset": "prisma migrate reset --force",
-    "build": "prisma generate && next build",
+    "build": "PRISMA_CLI_BINARY_TARGETS=rhel-openssl-3.0.x prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate"
