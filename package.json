@@ -1,6 +1,6 @@
 {
   "name": "nextex",
-  "version": "0.1.0", 
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -70,6 +70,7 @@
     "recharts": "^2.15.3",
     "sonner": "^2.0.3",
     "tailwind-merge": "^3.3.0",
+    "tsx": "^4.19.4",
     "tweetnacl": "^1.0.3",
     "vaul": "^1.1.2",
     "zod": "^3.24.4"
