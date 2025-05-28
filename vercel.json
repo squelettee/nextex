@@ -2,14 +2,6 @@
   "buildCommand": "bun run build",
   "installCommand": "bun install",
   "framework": "nextjs",
-  "functions": {
-    "src/app/**/*.ts": {
-      "maxDuration": 30
-    },
-    "src/actions/**/*.ts": {
-      "maxDuration": 30
-    }
-  },
   "env": {
     "PRISMA_GENERATE_DATAPROXY": "true"
   }
