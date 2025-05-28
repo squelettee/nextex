@@ -17,24 +17,22 @@ type UserWithRelations = User & {
   likedBy: { fromId: string }[]
 };
 
-export default function DashboardClient({ usersProps }: { usersProps: UserWithRelations[] }) {
+export default function DashboardClient({ usersProps, user }: { usersProps: UserWithRelations[], user: UserWithRelations | null }) {
   const { connected, publicKey } = useWallet();
   const [users, setUsers] = useState<UserWithRelations[]>(usersProps);
   const router = useRouter();
   const [likeAnimation, setLikeAnimation] = useState<{ id: string | null, type: 'like' | 'dislike' | null }>({ id: null, type: null });
-  const [currentUser, setCurrentUser] = useState<UserWithRelations | null>(null);
 
   useEffect(() => {
     if (!connected) {
       router.push("/");
     }
     setUsers(usersProps);
-    setCurrentUser(usersProps.find(u => u.wallet === publicKey?.toBase58()) || null);
-  }, [connected, router, usersProps, publicKey]);
+  }, [connected, router, usersProps]);
 
-  const dislikedIds = currentUser?.dislikes?.map((d: { toId: string }) => d.toId) ?? [];
-  const likedIds = currentUser?.likes?.map(l => l.toId) ?? [];
-  const likedByIds = currentUser?.likedBy?.map(l => l.fromId) ?? [];
+  const dislikedIds = user?.dislikes?.map((d: { toId: string }) => d.toId) ?? [];
+  const likedIds = user?.likes?.map(l => l.toId) ?? [];
+  const likedByIds = user?.likedBy?.map(l => l.fromId) ?? [];
   const matchedIds = likedIds.filter(id => likedByIds.includes(id));
 
   async function handleLike(userId: string, type: 'like' | 'dislike') {
@@ -61,13 +59,13 @@ export default function DashboardClient({ usersProps }: { usersProps: UserWithRe
       style={{ backgroundImage: 'url(/backgroundshape.webp)', backgroundSize: 'cover' }}
     >
       <div className="flex flex-row justify-end items-center gap-1 p-2 fixed top-0 ">
-        <p className="text-foreground font-bold">{currentUser?.tokens}</p>
+        <p className="text-foreground font-bold">{user?.tokens}</p>
         <CoinsIcon className="w-4 h-4 text-foreground" />
       </div>
 
       <div className="w-full h-full flex items-center justify-center">
         <div className="w-full self-start mt-16 h-[80vh]">
-          {(!currentUser?.image || !currentUser?.name || !currentUser?.bio) ? (
+          {(!user?.image || !user?.name || !user?.bio) ? (
             <div className="flex flex-col items-center justify-center h-full text-center">
               <p className="text-xl font-bold text-foreground">Update your profile to swipe</p>
               <Link href={`/dashboard/edit-profile?wallet=${publicKey?.toBase58()}`} className="mt-4 px-6 py-2 bg-primary text-primary-foreground font-bold rounded-lg shadow hover:bg-primary/80 transition-colors">
@@ -88,13 +86,13 @@ export default function DashboardClient({ usersProps }: { usersProps: UserWithRe
             </div>
           ) : (
             (() => {
-              const filteredUsers = users.filter(user =>
-                user.wallet !== publicKey?.toBase58() &&
-                !dislikedIds.includes(user.id) &&
-                !matchedIds.includes(user.id) &&
-                user.image &&
-                user.name &&
-                user.bio
+              const filteredUsers = users.filter(userItem =>
+                userItem.wallet !== publicKey?.toBase58() &&
+                !dislikedIds.includes(userItem.id) &&
+                !matchedIds.includes(userItem.id) &&
+                userItem.image &&
+                userItem.name &&
+                userItem.bio
               );
               const currentProfile = filteredUsers[0];
 
@@ -139,7 +137,7 @@ export default function DashboardClient({ usersProps }: { usersProps: UserWithRe
         </div>
       </div>
       <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-sm min-w-sm z-20 h-[10vh]">
-        <Navbar user={currentUser} publicKey={publicKey} />
+        <Navbar user={user} publicKey={publicKey} />
       </div>
     </div>
   );

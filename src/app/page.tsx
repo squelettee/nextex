@@ -35,7 +35,7 @@ function Home() {
           if (!user.onboarded) {
             router.push("/dashboard/edit-profile?wallet=" + publicKey.toBase58());
           } else {
-            router.push("/dashboard");
+            router.push("/dashboard?wallet=" + publicKey.toBase58());
           }
         }
       } catch (error) {
