@@ -164,10 +164,10 @@ export function Navbar({ user, publicKey }: { user: User | null, publicKey: Publ
         </Link>
       )}
 
-      {pathname === `/dashboard` ? (
+      {pathname === `/dashboard?wallet=${publicKey?.toBase58()}` ? (
         <HeartIcon className="w-10 h-10 text-primary hover:text-foreground transition-colors rounded-full p-1" />
       ) : (
-        <Link href={`/dashboard`} className="text-primary hover:text-foreground transition-colors">
+        <Link href={`/dashboard?wallet=${publicKey?.toBase58()}`} className="text-primary hover:text-foreground transition-colors">
           <HeartIcon className="w-10 h-10 text-primary hover:text-foreground transition-colors rounded-full p-1" />
         </Link>
       )}

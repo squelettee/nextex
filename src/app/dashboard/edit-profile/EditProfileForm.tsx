@@ -54,7 +54,7 @@ export default function EditProfileForm({ user }: { user: User | null }) {
         Buffer.from(signature).toString("base64")
       );
 
-      router.push("/dashboard");
+      router.push("/dashboard?wallet=" + publicKey.toBase58());
     } catch (error) {
       console.error(error);
     } finally {
