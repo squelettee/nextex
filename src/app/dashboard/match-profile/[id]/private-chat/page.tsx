@@ -1,6 +1,6 @@
 import getMessages from "@/query/getMessages";
 import getUser from "@/query/getUser";
-import type { Message } from "../../../../../../generated/prisma";
+import type { Message } from "@prisma/client";
 import PrivateChatClient from "./PrivateChatClient";
 
 export default async function PrivateChatPage({ params, searchParams }: { params: Promise<{ id: string }>, searchParams: Promise<{ me?: string, wallet?: string }> }) {

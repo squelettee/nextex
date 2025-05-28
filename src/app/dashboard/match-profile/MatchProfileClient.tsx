@@ -1,9 +1,9 @@
 "use client";
+import type { User } from "@prisma/client";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { CoinsIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import type { User } from "../../../../generated/prisma";
 import { Navbar } from "../DashboardClient";
 
 export default function MatchProfileClient({ matches, myUserId, user }: { matches: User[]; myUserId: string, user: User | null }) {

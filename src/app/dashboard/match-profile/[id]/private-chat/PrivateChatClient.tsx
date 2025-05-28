@@ -1,10 +1,10 @@
 "use client";
 import { sendMessage } from "@/actions/send-message";
 import { pusherClient } from "@/lib/pusher-client";
+import type { Message, User } from "@prisma/client";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { CoinsIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import type { Message, User } from "../../../../../../generated/prisma";
 import { Navbar } from "../../../DashboardClient";
 
 export default function PrivateChatClient({ myUserId, otherUserId, messages: initialMessages, user }: { myUserId: string; otherUserId: string; messages: Message[]; user: User }) {

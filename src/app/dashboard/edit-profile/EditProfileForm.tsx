@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import type { User } from "@prisma/client";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { CoinsIcon } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
-import type { User } from "../../../../generated/prisma";
 import { Navbar } from "../DashboardClient";
 
 const WalletDisconnectButton = dynamic(() => import("@solana/wallet-adapter-react-ui").then((mod) => mod.WalletDisconnectButton), { ssr: false });

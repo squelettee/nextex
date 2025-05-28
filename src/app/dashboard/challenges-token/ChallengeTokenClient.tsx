@@ -1,8 +1,8 @@
 "use client";
-import { User } from "@/../generated/prisma";
 import { claimSocialMission } from "@/actions/claim-social-mission";
 import { dailyClaim } from "@/actions/daily-claim";
 import { Button } from "@/components/ui/button";
+import { User } from "@prisma/client";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { isSameDay } from "date-fns";
 import { CoinsIcon } from "lucide-react";

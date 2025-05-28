@@ -2,6 +2,7 @@
 
 import { dislikeUser } from "@/actions/dislike";
 import { likeUser } from "@/actions/like-user";
+import { User } from "@prisma/client";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import { CoinsIcon, HeartIcon, MessageCircleHeart, SettingsIcon, XIcon } from "lucide-react";
@@ -9,7 +10,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { User } from "../../../generated/prisma";
 
 type UserWithRelations = User & {
   dislikes: { toId: string }[],
@@ -31,9 +31,9 @@ export default function DashboardClient({ usersProps, user }: { usersProps: User
   }, [connected, router, usersProps]);
 
   const dislikedIds = user?.dislikes?.map((d: { toId: string }) => d.toId) ?? [];
-  const likedIds = user?.likes?.map(l => l.toId) ?? [];
-  const likedByIds = user?.likedBy?.map(l => l.fromId) ?? [];
-  const matchedIds = likedIds.filter(id => likedByIds.includes(id));
+  const likedIds = user?.likes?.map((l: { toId: string }) => l.toId) ?? [];
+  const likedByIds = user?.likedBy?.map((l: { fromId: string }) => l.fromId) ?? [];
+  const matchedIds = likedIds.filter((id: string) => likedByIds.includes(id));
 
   async function handleLike(userId: string, type: 'like' | 'dislike') {
     if (!publicKey) return;

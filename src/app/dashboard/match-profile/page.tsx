@@ -1,6 +1,6 @@
 import getMatches from "@/query/getMatches";
 import getUser from "@/query/getUser";
-import type { User } from "../../../../generated/prisma";
+import type { User } from "@prisma/client";
 import MatchProfileClient from "./MatchProfileClient";
 
 export default async function MatchProfilePage({ searchParams }: { searchParams: Promise<{ userId?: string, wallet?: string }> }) {
