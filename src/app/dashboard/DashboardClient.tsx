@@ -10,6 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 type UserWithRelations = User & {
   dislikes: { toId: string }[],
@@ -44,7 +45,13 @@ export default function DashboardClient({ usersProps, user }: { usersProps: User
 
     setLikeAnimation({ id: userId, type });
     if (type === 'like') {
-      await likeUser(currentUser.id, userId);
+      const isMatch = await likeUser(currentUser.id, userId);
+      if (isMatch) {
+        toast.success("🎉 It's a match! You can now chat together.", {
+          duration: 4000,
+          position: "top-center",
+        });
+      }
     } else if (type === 'dislike') {
       await dislikeUser(currentUser.id, userId);
     }
